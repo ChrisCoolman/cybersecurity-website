@@ -1,0 +1,34 @@
+
+.chiron-sung-hk-<uniquifier> {
+  font-family: "Chiron Sung HK", serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+
+
+h1 {
+  font-family: "Chiron Sung HK", serif;
+  color: white;
+  font-size: 48px;
+  text-align: center;
+}
+
+.titleDiv {
+  background-color: darkorange;
+  padding: 20px;
+  margin: 0px;
+}
+
+.info {
+  display: flex;
+  justify-content: center; /* Distributes space between items */
+  align-items: center; /* Aligns items vertically in the center */
+}
+
+.info p {
+  width: 50%;
+  font-size: 18px;
+  margin: 20px;
+  line-height: 1.6;
+}
