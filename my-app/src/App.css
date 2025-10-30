@@ -1,11 +1,9 @@
-
-.chiron-sung-hk-<uniquifier> {
+.chiron-sung-hk {
   font-family: "Chiron Sung HK", serif;
   font-optical-sizing: auto;
-  font-weight: <weight>;
+  font-weight: 400;
   font-style: normal;
 }
-
 
 h1 {
   font-family: "Chiron Sung HK", serif;
@@ -17,18 +15,115 @@ h1 {
 .titleDiv {
   background-color: darkorange;
   padding: 20px;
-  margin: 0px;
+  margin: 0;
 }
 
+/* Layout for the info section; allow wrapping on small screens */
 .info {
   display: flex;
-  justify-content: center; /* Distributes space between items */
-  align-items: center; /* Aligns items vertically in the center */
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
+/* Paragraph next to the image */
 .info p {
   width: 50%;
   font-size: 18px;
   margin: 20px;
   line-height: 1.6;
+}
+
+/* Global image rules to keep images contained */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Limit the hero/illustration size so it never overflows */
+.info img {
+  max-width: 360px;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+/* CIA section */
+.CIA {
+  display: grid;
+  place-items: center;
+  gap: 12px;
+}
+
+.CIA img {
+  max-width: 420px;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+h2 {
+  background-color: darkorange;
+  padding: 20px;
+  margin: 0;
+  text-align: center;
+  color: white;
+  font-family: "Chiron Sung HK", serif;
+}
+
+/* Authentication cards: wrap and keep cards a fixed sensible width */
+.auCards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.auCard {
+  flex: 0 0 220px;
+  text-align: center;
+  padding: 8px;
+}
+
+/* Fixed thumbnail sizing so the layout remains consistent */
+.auCard img {
+  width: 180px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Small-screen adjustments */
+@media (max-width: 800px) {
+  .info {
+    flex-direction: column;
+  }
+
+  .info p {
+    width: 100%;
+    margin: 12px;
+  }
+
+  .CIA img {
+    max-width: 320px;
+  }
+
+  .auCard {
+    flex: 0 0 45%;
+  }
+
+  .auCard img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 420px) {
+  h1 { font-size: 34px; }
+  .auCard { flex: 0 0 100%; }
+  .auCard img { height: 160px; }
 }
