@@ -106,6 +106,36 @@ function App() {
           <li>Be cautious if a website is the real one when putting in a password</li>
         </ul>
       </div>
+      <h2>Social Engineering</h2>
+      <div className="socialEngineering">
+        <p>Social engineering is a when a bad guy manipulates individuals into sharing confidential information. Here are some tips to protect yourself:</p>
+        <ul>
+          <li>Be skeptical of people asking for sensitive information.</li>
+          <li>Verify the identity of someone before sharing information.</li>
+          <li>Educate yourself and others about common social engineering tactics.</li>
+        </ul>
+      </div>
+      <h2>Potential Threats</h2>
+      <div className="threats">
+        <p>This black friday, beware of cybersecurity threats! Here are some potential threats to be aware of:</p>
+        <ul>
+          <li><strong>Phishing Attacks:</strong> Be cautious of emails or messages that appear to be from legitimate sources but are designed to steal your information.</li>
+          <li><strong>Malware:</strong> Avoid downloading attachments or clicking on links from unknown sources, as they may contain harmful software.</li>
+          <li><strong>Online Shopping Scams:</strong> Use reputable websites for online shopping and be skeptical of deals that seem too good to be true.</li>
+        </ul>
+      </div>
+      <h2>Credits</h2>
+      <p>Info by Me</p>
+      <p>Design and thanksgiving jokes by github copilot</p>
+      <p>Image Sources</p>
+      <div className="imgSources">
+        <a href="https://www.the-parallax.com/thanksgiving-cybersecurity-trends/" target="_blank">Thanksgiving Cybersecurity</a>
+        <a href="https://www.kaspersky.com/resource-center/definitions/biometrics" target="_blank">Biometrics Image</a>
+        <a href="https://docs.google.com/presentation/d/1GLppV2rufPo7kBWb9er7v73fQhBIHxMs/edit?pli=1" target="_blank">CIA Triad Image</a>
+        <a href="https://www.xcitium.com/knowledge-base/mfa/" target="_blank">MFA Image</a>
+        <a href="https://www.securitymagazine.com/articles/89919-the-25-passwords-leaked-online-in-2018" target="_blank">Password Image</a>
+        <a href="https://www.usatoday.com/story/money/business/2015/10/01/chip-credit-debit-card-readers-october-1/73140516/" target="_blank">Smart Card Image</a>
+      </div>
     </>
   )
 }
