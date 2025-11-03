@@ -1,129 +1,186 @@
-.chiron-sung-hk {
-  font-family: "Chiron Sung HK", serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
+/* --- IMPORTS & CSS VARIABLES --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+  --color-bg: #1a1d24;
+  --color-surface: #2c303a;
+  --color-primary: #ff8c00; /* Deep Orange */
+  --color-secondary: #ffc107; /* Amber */
+  --color-accent: #03a9f4; /* Light Blue */
+  --color-text: #ffffff; /* Brighter text */
+  --color-text-secondary: #cccccc; /* Brighter secondary text */
+  --font-family: 'Poppins', sans-serif;
+  --shadow: 0 8px 24px rgba(0,0,0,0.3);
+  --border-radius: 16px;
+  --transition-speed: 0.4s;
+  --glow-color: rgba(255, 193, 7, 0.4);
 }
 
-h1 {
-  font-family: "Chiron Sung HK", serif;
-  color: white;
-  font-size: 48px;
-  text-align: center;
+/* --- GLOBAL STYLES --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.7;
 }
+h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; color: var(--color-text); }
+h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); }
+h2 { font-size: 2rem; margin-bottom: 1.5rem; color: var(--color-primary); }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.2rem; }
+p { color: var(--color-text-secondary); margin-bottom: 1rem; }
+a { color: var(--color-secondary); text-decoration: none; transition: color 0.3s ease; }
+a:hover { color: var(--color-primary); }
+ul { list-style: none; padding-left: 0; }
+li { position: relative; padding-left: 1.5em; margin-bottom: 0.75em; color: var(--color-text-secondary); }
+li::before { content: '🦃'; position: absolute; left: 0; font-size: 1em; }
 
-.titleDiv {
-  background-color: darkorange;
-  padding: 20px;
-  margin: 0;
-}
+/* --- LAYOUT --- */
+.App { overflow-x: hidden; }
+.container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
 
-/* Layout for the info section; allow wrapping on small screens */
-.info {
+/* --- HERO HEADER --- */
+.hero {
+  position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-/* Paragraph next to the image */
-.info p {
-  width: 50%;
-  font-size: 18px;
-  margin: 20px;
-  line-height: 1.6;
-}
-
-/* Global image rules to keep images contained */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Limit the hero/illustration size so it never overflows */
-.info img {
-  max-width: 360px;
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-}
-
-/* CIA section */
-.CIA {
-  display: grid;
-  place-items: center;
-  gap: 12px;
-}
-
-.CIA img {
-  max-width: 420px;
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-}
-
-h2 {
-  background-color: darkorange;
-  padding: 20px;
-  margin: 0;
-  text-align: center;
-  color: white;
-  font-family: "Chiron Sung HK", serif;
-}
-
-/* Authentication cards: wrap and keep cards a fixed sensible width */
-.auCards {
-  display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-
-.auCard {
-  flex: 0 0 220px;
   text-align: center;
-  padding: 8px;
+  padding: 8rem 2rem;
+  min-height: 60vh;
+  overflow: hidden;
+}
+.hero-background-layer {
+  position: absolute;
+  inset: -50px; /* Make it larger than the viewport to hide edges during transform */
+  background: linear-gradient(rgba(26, 29, 36, 0.9), rgba(26, 29, 36, 0.9)), url('https://images.unsplash.com/photo-1542621334-a254cf47763b?q=80&w=2070') center/cover no-repeat;
+  transition: transform 0.2s ease-out;
+  /* NEW: Parallax effect using CSS variables from JS */
+  transform: translate(calc(var(--mouse-x) * -20px), calc(var(--mouse-y) * -20px));
+}
+.hero-content {
+  position: relative;
+  transition: transform 0.2s ease-out;
+  /* NEW: Parallax effect for the content */
+  transform: translate(calc(var(--mouse-x) * 10px), calc(var(--mouse-y) * 10px));
 }
 
-/* Fixed thumbnail sizing so the layout remains consistent */
-.auCard img {
-  width: 180px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 6px;
+/* NEW: Animated Title */
+@keyframes pop-in {
+  0% { opacity: 0; transform: translateY(20px) scale(0.8); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.hero h1 span {
+  display: inline-block;
+  opacity: 0;
+  animation: pop-in 0.6s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Small-screen adjustments */
-@media (max-width: 800px) {
-  .info {
-    flex-direction: column;
-  }
+.hero .subtitle { font-size: 1.2rem; max-width: 600px; margin: 1rem auto 0; color: var(--color-text); font-weight: 300; }
 
-  .info p {
-    width: 100%;
-    margin: 12px;
-  }
+/* --- INTERACTIVE SCROLL ANIMATION --- */
+.animated-section { opacity: 0; transform: translateY(50px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; margin-bottom: 2rem; }
+.animated-section.is-visible { opacity: 1; transform: translateY(0); }
 
-  .CIA img {
-    max-width: 320px;
-  }
-
-  .auCard {
-    flex: 0 0 45%;
-  }
-
-  .auCard img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-  }
+/* --- NEW: INTERACTIVE ACCORDION CARD --- */
+.interactive-card {
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  border-left: 5px solid var(--color-primary);
+  overflow: hidden;
 }
+.interactive-header {
+  padding: 1.5rem 2rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  transition: background-color 0.3s;
+}
+.interactive-header:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.interactive-header h3 {
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.card-icon {
+  font-size: 1.2em;
+}
+.plus-minus-toggle {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+.plus-minus-toggle::before,
+.plus-minus-toggle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 3px;
+  background-color: var(--color-secondary);
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border-radius: 2px;
+}
+.plus-minus-toggle::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.interactive-card[data-is-open="true"] .plus-minus-toggle::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+.interactive-content {
+  display: grid;
+  grid-template-rows: 0fr; /* Collapsed by default */
+  transition: grid-template-rows 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.interactive-card[data-is-open="true"] .interactive-content {
+  grid-template-rows: 1fr; /* Expanded */
+}
+.interactive-content-inner {
+  overflow: hidden;
+  padding: 0 2rem 1.5rem;
+}
+.interactive-content .card-header-image {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 0.5rem 0 1.5rem;
+}
+.interactive-content ul { margin-top: 1rem; }
 
-@media (max-width: 420px) {
-  h1 { font-size: 34px; }
-  .auCard { flex: 0 0 100%; }
-  .auCard img { height: 160px; }
+/* --- AUTHENTICATION SECTION --- */
+.content-card.full-width { background: var(--color-surface); padding: 2rem; border-radius: var(--border-radius); }
+.auth-factors { display: flex; justify-content: space-around; margin: 1rem 0 2rem; text-align: center; flex-wrap: wrap; }
+.auth-factors li { padding: 0; margin: 0.5rem 1rem; font-weight: 300; font-size: 1.1rem; color: var(--color-text-secondary); }
+.auth-factors li strong { color: var(--color-text); }
+.auth-factors li::before { content: none; }
+.auCards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.auCard { background: var(--color-bg); border-radius: var(--border-radius); overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+/* NEW: Glowing hover effect */
+.auCard:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 20px var(--glow-color);
+}
+.auCard .card-image-container { width: 100%; height: 180px; }
+.auCard img { width: 100%; height: 100%; object-fit: cover; }
+.auCard .card-content { padding: 1.5rem; }
+.auCard h4 { color: var(--color-secondary); margin-bottom: 0.5rem; }
+
+/* --- FOOTER --- */
+.footer { background-color: #111317; padding: 3rem 1.5rem; text-align: center; margin-top: 3rem; }
+.footer .container { padding: 0; }
+.footer h2 { color: var(--color-primary); }
+.imgSources { margin-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 768px) {
+  .hero { min-height: 50vh; padding: 6rem 1.5rem; }
+  h1 { font-size: 2.2rem; }
 }

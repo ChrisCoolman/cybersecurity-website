@@ -1,131 +1,214 @@
-import React from 'react'
-import './App.css'
-import ciaImage from './assets/cia.png'
-import biometricsImg from './assets/biometrics.jpg'
-import mfaImg from './assets/mfa.png'
-import passwordImg from './assets/password.webp'
-import smartCardImg from './assets/smartCard.jpg'
+import React, { useState, useEffect, useRef } from 'react';
+import './App.css';
+import ciaImage from './assets/cia.png';
+import biometricsImg from './assets/biometrics.jpg';
+import mfaImg from './assets/mfa.png';
+import passwordImg from './assets/password.webp';
+import smartCardImg from './assets/smartCard.jpg';
 
-function App() {
+// Helper component for scroll-in animations
+const AnimatedSection = ({ children }) => {
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(ref.current);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => {
+      if (ref.current) observer.unobserve(ref.current);
+    };
+  }, []);
+
   return (
-    <>
-      <div className="titleDiv">
-        <h1>Thanksgiving Cybersecurity</h1>
+    <section ref={ref} className={`animated-section ${isVisible ? 'is-visible' : ''}`}>
+      {children}
+    </section>
+  );
+};
+
+// NEW: Reusable Interactive Accordion Card component
+const InteractiveCard = ({ title, icon, children, startOpen = false }) => {
+  const [isOpen, setIsOpen] = useState(startOpen);
+  
+  return (
+    <div className="interactive-card" data-is-open={isOpen}>
+      <div className="interactive-header" onClick={() => setIsOpen(!isOpen)}>
+        <h3>
+          {icon && <span className="card-icon">{icon}</span>}
+          {title}
+        </h3>
+        <div className="plus-minus-toggle"></div>
       </div>
-
-      <div className="info">
-        <p>
-          As we gather around the table this Thanksgiving, let's remember to protect our digital feast.
-          Cybersecurity is as essential as the turkey on our plates.
-          To better understand the importance of cybersecurity during the holiday season, consider the following information to keep your online presence safe:
-        </p>
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmf7cWLkoPSDcF3_ymjBWuJxD2FtG020ilqQ&s"
-          alt="Cybersecurity Thanksgiving"
-        />
-      </div>
-
-      <h2>The CIA Triad</h2>
-      <div className="CIA">
-        <img src={ciaImage} alt="CIA Triad Diagram" />
-        <p>
-          The CIA Triad is a fundamental concept in cybersecurity, representing three core principles: Confidentiality, Integrity, and Availability.
-        </p>
-        <ul>
-          <li><strong>Confidentiality:</strong> Data is kept secret and only those who are allowed to can see it. This is like keeping your secret family recipes safe from prying eyes.</li>
-          <li><strong>Integrity:</strong> Making sure data is not modified or corrupted. Just as you wouldn't want your Thanksgiving recipes altered, data must remain uncorrupted and trustworthy.</li>
-          <li><strong>Availability:</strong> Ensuring data is always available for allowed users. Just as you want your Thanksgiving dinner to be ready on time, systems must be reliable and available for users.</li>
-        </ul>
-      </div>
-
-      <h2>3 States of Data</h2>
-      <div className="data">
-        <p>Data can be in 3 different states.</p>
-        <ul>
-          <li><strong>Rest:</strong> Data at rest is when data is inside of a database or server doing nothing. Just like leftovers stored in the fridge, this data needs to be protected from unauthorized access.</li>
-          <li><strong>Transit:</strong> Data in transit is being passed to another database or server. Similar to passing dishes around the table, this data must be secured to prevent interception by unauthorized parties.</li>
-          <li><strong>Use:</strong> Data is in use when it is being processed instead of sitting in a database or server. Just as you handle food carefully while cooking, this data must be protected during processing to prevent leaks or corruption.</li>
-        </ul>
-      </div>
-
-      <h2>Different Types of Authentication</h2>
-      <div className="authentication">
-        <h3>Authentication is a way of verifying who you are using 3 different methods:</h3>
-        <ul>
-          <li><strong>Something you know:</strong> This could be a password or PIN. Just like remembering your secret family recipe, this method relies on knowledge only you possess.</li>
-          <li><strong>Something you have:</strong> This could be a physical device like a smartphone or security token. Similar to having a special key to your home, this method requires possession of a specific item.</li>
-          <li><strong>Something you are:</strong> This involves biometric data like fingerprints or facial recognition. Just as your unique features identify you, this method uses inherent physical characteristics for verification.</li>
-        </ul>
-
-        <h3 style={{ textAlign: "center" }}>There are many different types of authentication that use these different methods</h3>
-
-        <div className="auCards">
-          <div className="auCard">
-            <h4>Biometrics</h4>
-            <img src={biometricsImg} alt="Biometrics Example" />
-            <p>An example of face ID being used to verify identity.</p>
-          </div>
-
-          <div className="auCard">
-            <h4>Multi-Factor Authentication</h4>
-            <img src={mfaImg} alt="Multi-Factor Authentication Example" />
-            <p>Using multiple methods (in this case password and token) to verify identity.</p>
-          </div>
-
-          <div className="auCard">
-            <h4>Password</h4>
-            <img src={passwordImg} alt="Using a password" />
-            <p>Typing in a password to verify identity.</p>
-          </div>
-
-          <div className="auCard">
-            <h4>Smart Card</h4>
-            <img src={smartCardImg} alt="Scanning a card" />
-            <p>Scanning a special card to verify identity.</p>
-          </div>
+      <div className="interactive-content">
+        <div className="interactive-content-inner">
+          {children}
         </div>
       </div>
-      <h2>Passwords</h2>
-      <div className="passwords">
-        <p>
-          Passwords are a very common method of authentication, but they can be vulnerable if not used correctly. Here are some tips for creating strong passwords:
-        </p>
-        <ul>
-          <li>Use a mix of letters, numbers, and special characters.</li>
-          <li>Avoid using easily guessable information like birthdays or common words.</li>
-          <li>Use a passPHRASE instead of a passWORD, which is a sequence of words that is easy for you to remember but hard for others to guess.</li>
-          <li>Regularly update your passwords and avoid reusing them across multiple accounts.</li>
-        </ul>
-      </div>
-      <h2>Phishing</h2>
-      <div className="phishing">
-        <p>Phishing is a common method of stealing information, in which attackers will pretend to be someone they are not to steal information. Here are some tips for spotting phising scams!</p>
-        <ul>
-          <li>Check who the message is sent by, only amazon can send a message from amazon.com, so don't trust amazun.com</li>
-          <li>Check where links lead to, if you get an email from amazon that doesn't go to amazon.com, it's fake</li>
-          <li>Be cautious if a website is the real one when putting in a password</li>
-        </ul>
-      </div>
-      <h2>Social Engineering</h2>
-      <div className="socialEngineering">
-        <p>Social engineering is a when a bad guy manipulates individuals into sharing confidential information. Here are some tips to protect yourself:</p>
-        <ul>
-          <li>Be skeptical of people asking for sensitive information.</li>
-          <li>Verify the identity of someone before sharing information.</li>
-          <li>Educate yourself and others about common social engineering tactics.</li>
-        </ul>
-      </div>
-      <h2>Potential Threats</h2>
-      <div className="threats">
-        <p>This black friday, beware of cybersecurity threats! Here are some potential threats to be aware of:</p>
-        <ul>
-          <li><strong>Phishing Attacks:</strong> Be cautious of emails or messages that appear to be from legitimate sources but are designed to steal your information.</li>
-          <li><strong>Malware:</strong> Avoid downloading attachments or clicking on links from unknown sources, as they may contain harmful software.</li>
-          <li><strong>Online Shopping Scams:</strong> Use reputable websites for online shopping and be skeptical of deals that seem too good to be true.</li>
-        </ul>
-      </div>
-      <h2>Credits</h2>
-      <p>Info by Me</p>
+    </div>
+  );
+};
+
+const authMethods = [
+  // ... (same as before)
+  {
+    title: 'Biometrics',
+    image: biometricsImg,
+    alt: 'Biometrics Example',
+    description: 'Verifying who you are with "something you are," like your face or fingerprint.',
+  },
+  {
+    title: 'Multi-Factor Authentication',
+    image: mfaImg,
+    alt: 'Multi-Factor Authentication Example',
+    description: 'Combining multiple methods (e.g., password + phone code) for extra security.',
+  },
+  {
+    title: 'Password',
+    image: passwordImg,
+    alt: 'Using a password',
+    description: 'The classic "something you know." A strong, unique password is your first line of defense.',
+  },
+  {
+    title: 'Smart Card',
+    image: smartCardImg,
+    alt: 'Scanning a card',
+    description: 'Using "something you have," like a physical keycard, to gain access.',
+  },
+];
+
+function App() {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      // Calculate mouse position from -1 to 1
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = (e.clientY / window.innerHeight) * 2 - 1;
+      setMousePos({ x, y });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+  
+  const heroTitle = "Thanksgiving Cybersecurity";
+
+  return (
+    <div className="App">
+      <header
+        className="hero"
+        style={{
+          '--mouse-x': mousePos.x,
+          '--mouse-y': mousePos.y,
+        }}
+      >
+        <div className="hero-background-layer"></div>
+        <div className="hero-content">
+          <h1>
+            {heroTitle.split('').map((char, i) => (
+              <span key={i} style={{ animationDelay: `${i * 50}ms` }}>
+                {char === ' ' ? '\u00A0' : char}
+              </span>
+            ))}
+          </h1>
+          <p className="subtitle">
+            While you're protecting the turkey from being overcooked, don't forget to protect your data from being stolen.
+          </p>
+        </div>
+      </header>
+
+      <main className="container">
+        <AnimatedSection>
+          <InteractiveCard title="A Holiday Cybersecurity Intro" icon="🦃" startOpen={true}>
+            <p>
+              As we gather this holiday season, our digital lives are as much a part of the celebration as the feast itself. Click through these topics to learn key concepts that will keep your online presence safe and sound.
+            </p>
+          </InteractiveCard>
+        </AnimatedSection>
+        
+        <AnimatedSection>
+            <InteractiveCard title="The CIA Triad" icon="🔒">
+              <img src={ciaImage} alt="CIA Triad Diagram" className="card-header-image" />
+              <p>The three core principles of information security.</p>
+              <ul>
+                <li><strong>Confidentiality:</strong> Keeping secrets. Think of it as guarding your secret family recipes.</li>
+                <li><strong>Integrity:</strong> Ensuring data is accurate and trustworthy, not a "turkey" of a file.</li>
+                <li><strong>Availability:</strong> Making sure you can access your data when you need it, just like the gravy on Thanksgiving day.</li>
+              </ul>
+            </InteractiveCard>
+        </AnimatedSection>
+
+        <AnimatedSection>
+            <InteractiveCard title="The 3 States of Data" icon="💾">
+               <p>Data needs protection no matter where it is.</p>
+               <ul>
+                <li><strong>At Rest:</strong> Data stored on a device, like leftovers in the fridge. It needs to be locked up tight.</li>
+                <li><strong>In Transit:</strong> Data moving across a network. It's like passing dishes at the table—you don't want anyone to intercept them.</li>
+                <li><strong>In Use:</strong> Data being actively processed by an application. This requires careful handling, just like carving the turkey.</li>
+              </ul>
+            </InteractiveCard>
+        </AnimatedSection>
+
+        <AnimatedSection>
+          <div className="content-card full-width">
+            <h2>Types of Authentication</h2>
+            <p>Authentication is how you prove you are who you say you are, using one of three factors:</p>
+            <ul className="auth-factors">
+                <li>Something you <strong>KNOW</strong></li>
+                <li>Something you <strong>HAVE</strong></li>
+                <li>Something you <strong>ARE</strong></li>
+            </ul>
+
+            <div className="auCards">
+              {authMethods.map((method) => (
+                <div className="auCard" key={method.title}>
+                  <div className="card-image-container">
+                     <img src={method.image} alt={method.alt} />
+                  </div>
+                  <div className="card-content">
+                    <h4>{method.title}</h4>
+                    <p>{method.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </AnimatedSection>
+        
+        <AnimatedSection>
+            <InteractiveCard title="Better Passwords" icon="🔑">
+                <p>A weak password is like an unlocked door. Strengthen your security with these tips:</p>
+                <ul>
+                    <li>Use a long mix of letters, numbers, & symbols.</li>
+                    <li>Avoid personal info (birthdays, names).</li>
+                    <li>Create a passPHRASE: `Correct!Horse-Battery-Staple?`</li>
+                    <li>Use a password manager to keep track.</li>
+                </ul>
+            </InteractiveCard>
+        </AnimatedSection>
+            
+        <AnimatedSection>
+            <InteractiveCard title="Spotting Phishing Scams" icon="🎣">
+                <p>Phishing is when attackers use fake emails or sites to trick you. Don't take the bait!</p>
+                <ul>
+                    <li>Check the sender's email address. Is it legit?</li>
+                    <li>Hover over links before clicking. Does the URL match?</li>
+                    <li>Beware of urgent threats or "too good to be true" offers.</li>
+                </ul>
+            </InteractiveCard>
+        </AnimatedSection>
+      </main>
+
+      <footer className="footer">
+        <p>Info by Me</p>
       <p>Design and thanksgiving jokes by github copilot</p>
       <p>Image Sources</p>
       <div className="imgSources">
@@ -136,8 +219,9 @@ function App() {
         <a href="https://www.securitymagazine.com/articles/89919-the-25-passwords-leaked-online-in-2018" target="_blank">Password Image</a>
         <a href="https://www.usatoday.com/story/money/business/2015/10/01/chip-credit-debit-card-readers-october-1/73140516/" target="_blank">Smart Card Image</a>
       </div>
-    </>
-  )
+      </footer>
+    </div>
+  );
 }
 
 export default App;
