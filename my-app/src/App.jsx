@@ -68,13 +68,13 @@ const authMethods = [
     title: 'Multi-Factor Authentication',
     image: mfaImg,
     alt: 'Multi-Factor Authentication Example',
-    description: 'Combining multiple methods (e.g., password + phone code) for extra security.',
+    description: 'Combining multiple methods like a password or token for extra security.',
   },
   {
     title: 'Password',
     image: passwordImg,
     alt: 'Using a password',
-    description: 'The classic "something you know." A strong, unique password is your first line of defense.',
+    description: 'A password is "something you know." Only one person knows the password which keeps it secure.',
   },
   {
     title: 'Smart Card',
@@ -139,9 +139,9 @@ function App() {
               <img src={ciaImage} alt="CIA Triad Diagram" className="card-header-image" />
               <p>The three core principles of information security.</p>
               <ul>
-                <li><strong>Confidentiality:</strong> Keeping secrets. Think of it as guarding your secret family recipes.</li>
-                <li><strong>Integrity:</strong> Ensuring data is accurate and trustworthy, not a "turkey" of a file.</li>
-                <li><strong>Availability:</strong> Making sure you can access your data when you need it, just like the gravy on Thanksgiving day.</li>
+                <li><strong>Confidentiality:</strong> Data is kept secret and only those who are allowed to can see it. This is like keeping your secret family recipes safe from prying eyes.</li>
+                <li><strong>Integrity:</strong> Making sure data is not modified or corrupted. Just as you wouldn't want your Thanksgiving recipes altered, data must remain uncorrupted and trustworthy.</li>
+                <li><strong>Availability:</strong> Ensuring data is always available for allowed users. Just as you want your Thanksgiving dinner to be ready on time, systems must be reliable and available for users.</li>
               </ul>
             </InteractiveCard>
         </AnimatedSection>
@@ -150,9 +150,9 @@ function App() {
             <InteractiveCard title="The 3 States of Data" icon="💾">
                <p>Data needs protection no matter where it is.</p>
                <ul>
-                <li><strong>At Rest:</strong> Data stored on a device, like leftovers in the fridge. It needs to be locked up tight.</li>
-                <li><strong>In Transit:</strong> Data moving across a network. It's like passing dishes at the table—you don't want anyone to intercept them.</li>
-                <li><strong>In Use:</strong> Data being actively processed by an application. This requires careful handling, just like carving the turkey.</li>
+                <li><strong>Rest:</strong> Data at rest is when data is inside of a database or server doing nothing. Just like leftovers stored in the fridge, this data needs to be protected from unauthorized access.</li>
+          <li><strong>Transit:</strong> Data in transit is being passed to another database or server. Similar to passing dishes around the table, this data must be secured to prevent interception by unauthorized parties.</li>
+          <li><strong>Use:</strong> Data is in use when it is being processed instead of sitting in a database or server. Just as you handle food carefully while cooking, this data must be protected during processing to prevent leaks or corruption.</li>
               </ul>
             </InteractiveCard>
         </AnimatedSection>
@@ -189,8 +189,8 @@ function App() {
                 <ul>
                     <li>Use a long mix of letters, numbers, & symbols.</li>
                     <li>Avoid personal info (birthdays, names).</li>
-                    <li>Create a passPHRASE: `Correct!Horse-Battery-Staple?`</li>
-                    <li>Use a password manager to keep track.</li>
+                    <li>Create a passPHRASE: `shaneIsVeryShort`</li>
+                    <li>Use a password manager to remember multiple different passwords.</li>
                 </ul>
             </InteractiveCard>
         </AnimatedSection>
@@ -199,18 +199,18 @@ function App() {
             <InteractiveCard title="Spotting Phishing Scams" icon="🎣">
                 <p>Phishing is when attackers use fake emails or sites to trick you. Don't take the bait!</p>
                 <ul>
-                    <li>Check the sender's email address. Is it legit?</li>
-                    <li>Hover over links before clicking. Does the URL match?</li>
-                    <li>Beware of urgent threats or "too good to be true" offers.</li>
+                    <li>Check who the message is sent by, only amazon can send a message from amazon.com, so don't trust amazun.com</li>
+          <li>Check where links lead to, if you get an email from amazon that doesn't go to amazon.com, it's fake</li>
+          <li>Be cautious if a website is the real one when putting in a password</li>
                 </ul>
             </InteractiveCard>
         </AnimatedSection>
       </main>
 
       <footer className="footer">
-        <p>Info by Me</p>
-      <p>Design and thanksgiving jokes by github copilot</p>
-      <p>Image Sources</p>
+        <p>Info by Me from Cyber.org</p>
+      <p>Design and Thanksgiving jokes by Github Copilot</p>
+      <p>Image Sources:</p>
       <div className="imgSources">
         <a href="https://www.the-parallax.com/thanksgiving-cybersecurity-trends/" target="_blank">Thanksgiving Cybersecurity</a>
         <a href="https://www.kaspersky.com/resource-center/definitions/biometrics" target="_blank">Biometrics Image</a>
